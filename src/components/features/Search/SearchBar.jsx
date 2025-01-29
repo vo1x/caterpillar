@@ -19,13 +19,9 @@ function SearchBar() {
 
   const handleSearch = async (query) => {
     setLoading(true);
-    const imdbIdRegex = /^tt\d{7,}$/;
-    let url = '';
-    if (imdbIdRegex.test(query)) {
-      url = `/find?id=${query}`;
-    } else {
-      url = `/search?term=${query}`;
-    }
+
+    const url = `/search?q=${query}`;
+
     const { data } = await axios.get(url);
     setLoading(false);
     setSearchResults(data.results);
@@ -46,7 +42,7 @@ function SearchBar() {
         onChange={handleInputChange}
         placeholder={'Search for a game...'}
         type={'text'}
-      ></Input>
+      />
       {searchResults?.length > 0 ? <Results searchResults={searchResults} /> : null}
     </div>
   );

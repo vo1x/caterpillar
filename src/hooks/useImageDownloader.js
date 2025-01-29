@@ -3,16 +3,16 @@ import { useState } from 'react';
 
 const useImageDownloader = () => {
   const [isDownloading, setIsDownloading] = useState(false);
-  const downloadImage = async (fileUrl, fileName, isTmdbUrl) => {
-    let url = fileUrl;
-    if (isTmdbUrl) {
-      const filePath = fileUrl.split('/').pop();
-      url = `/tmdb/t/p/original/${filePath}`;
-    }
+  const [isDownloaded, setIsDownloaded] = useState(false);
+  const [isDownloadError, setIsDownloadError] = useState(false);
+
+  const downloadImage = async (fileUrl, fileName) => {
     try {
       setIsDownloading(true);
+      setIsDownloadError(false);
+      setIsDownloaded(false);
 
-      const res = await axios.get(url, {
+      const res = await axios.get(fileUrl, {
         responseType: 'blob'
       });
 
@@ -24,13 +24,19 @@ const useImageDownloader = () => {
       link.click();
       document.body.removeChild(link);
       setIsDownloading(false);
+      setIsDownloaded(true);
+
+      setTimeout(() => {
+        setIsDownloaded(false);
+      }, 2000);
     } catch (error) {
       setIsDownloading(false);
+      setIsDownloadError(true);
       console.log('Error: ', error);
     }
   };
 
-  return { downloadImage, isDownloading };
+  return { downloadImage, isDownloading, isDownloadError, isDownloaded };
 };
 
 export default useImageDownloader;

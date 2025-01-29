@@ -20,7 +20,8 @@ import useFields from '../hooks/useFields';
 import useFormStore from '../stores/formStore';
 
 import SystemRequirements from '../components/SystemRequirements';
-
+import BannerSelector from '../components/BannerSelector';
+import Banner from '../components/Banner';
 function FormBuilder() {
   const { fetchFieldInfo } = useFields();
   const [inputValue, setInputValue] = useState('');
@@ -101,87 +102,81 @@ function FormBuilder() {
               <SearchBar />
             </div>
             <div className="flex flex-col gap-8 lg:flex-row">
-              <div className="flex flex-col gap-2">
-                <Label>GAME INFO</Label>
-                <div className="flex w-full max-w-[350px] flex-col items-center justify-center gap-4 rounded-lg bg-[#1C1C1E] p-4 lg:max-w-max">
-                  <div className=" flex max-w-96  flex-col  gap-4 px-4 lg:px-0 ">
-                    <Input
-                      label={'Name'}
-                      value={formData.title}
-                      name={'title'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                    <Input
-                      label={'Version'}
-                      value={formData.version}
-                      name={'version'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                    <Input
-                      label={'Released'}
-                      value={formData.released}
-                      name={'released'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                  </div>
+              <Section sectionTitle={`Game Info`}>
+                <div className=" flex max-w-96  flex-col  gap-4 px-4 lg:px-0 ">
+                  <Input
+                    label={'Name'}
+                    value={formData.title}
+                    name={'title'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
+                  <Input
+                    label={'Version'}
+                    value={formData.version}
+                    name={'version'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
+                  <Input
+                    label={'Released'}
+                    value={formData.released}
+                    name={'released'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
                 </div>
-              </div>
+              </Section>
 
-              <div className="flex flex-col gap-2">
-                <Label>Metadata</Label>
-                <div className="flex w-full max-w-[350px] flex-col items-center justify-center gap-4 rounded-lg bg-[#1C1C1E] p-4 lg:max-w-max">
-                  <div className=" flex max-w-96  flex-col  gap-4 px-4 lg:px-0 ">
-                    <Input
-                      label={'Publisher'}
-                      defaultValue={formData.publishers.join(', ')}
-                      value={formData.publisherString}
-                      name={'publisherString'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                    <Input
-                      label={'Developer'}
-                      defaultValue={formData.developers.join(', ')}
-                      value={formData.developerString}
-                      name={'developerString'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                    <Input
-                      label={'Repack'}
-                      value={formData.repack}
-                      name={'repack'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                    <Input
-                      label={'Size'}
-                      value={formData.size}
-                      name={'size'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                    />
-                    {/* <MultiSelector
+              <Section sectionTitle={`Metadata`}>
+                <div className=" flex max-w-96  flex-col  gap-4 px-4 lg:px-0 ">
+                  <Input
+                    label={'Publisher'}
+                    defaultValue={formData.publishers.join(', ')}
+                    value={formData.publisherString}
+                    name={'publisherString'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
+                  <Input
+                    label={'Developer'}
+                    defaultValue={formData.developers.join(', ')}
+                    value={formData.developerString}
+                    name={'developerString'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
+                  <Input
+                    label={'Repack'}
+                    value={formData.repack}
+                    name={'repack'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
+                  <Input
+                    label={'Size'}
+                    value={formData.size}
+                    name={'size'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                  />
+                  {/* <MultiSelector
                       label={`Platforms`}
                       options={[
                         { name: 'Steam', value: 'Steam' },
                         { name: 'Epic Games', value: 'Epic Games' }
                       ]}
                     ></MultiSelector> */}
-                    <Input
-                      label={'Platforms'}
-                      value={formData.platforms}
-                      name={'platforms'}
-                      onChange={handleInputFieldChange}
-                      type={'text'}
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    label={'Platforms'}
+                    value={formData.platforms}
+                    name={'platforms'}
+                    onChange={handleInputFieldChange}
+                    type={'text'}
+                    disabled
+                  />
                 </div>
-              </div>
+              </Section>
             </div>
 
             <Section sectionTitle={'System Requirements'}>
@@ -190,10 +185,9 @@ function FormBuilder() {
               ></SystemRequirements>
             </Section>
 
-            <div className=" flex flex-col gap-2">
-              <Label>Poster</Label>
-              <img src={formData.posterURL} alt="" className="max-w-96 rounded-md border" />
-            </div>
+            <Section sectionTitle={`Banner`}>
+              <Banner url={formData.posterURL} />
+            </Section>
 
             <div className=" flex flex-col gap-2">
               <Label>Description</Label>
